@@ -11,14 +11,42 @@ export class Home extends React.Component {
     this.state = {
       formState: "login"
     }
+    this.setFormState = this.setFormState.bind(this)
+  }
+
+  setFormState(formState) {
+    this.setState({ formState })
+  }
+
+  renderToggleContent() {
+    switch (this.state.formState) {
+      case "login":
+        return (
+          <div
+            className={style.changeLink}
+            onClick={() => this.setFormState("signup")}>
+            Need an account? Signup.
+          </div>
+        )
+      case "signup":
+        return (
+          <div
+            className={style.changeLink}
+            onClick={() => this.setFormState("login")}>
+            Have an account? Login.
+          </div>
+        )
+      default: return null
+    }
   }
 
   render() {
     return (
       <div className={style.leader}>
         <h1 className={style.title}>Phoenix Chat</h1>
-        {this.state.formState === "signup" ? <Signup /> : null}
-        {this.state.formState === "login" ? <Login /> : null}
+        { this.state.formState === "signup" ? <Signup /> : null }
+        { this.state.formState === "login" ? <Login /> : null }
+        { this.renderToggleContent() }
         <img
           role="presentation"
           className={style.circles}
