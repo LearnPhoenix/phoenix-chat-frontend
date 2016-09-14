@@ -1,5 +1,28 @@
 const Actions = {}
 
+Actions.userAuth = function userAuth() {
+  return dispatch => fetch("http://localhost:4000/auth/me", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.token}` || ""
+    }
+  })
+  .then((res) => { return res.json() })
+  .then((res) => {
+    dispatch({
+      type: "USER_AUTH",
+      payload: {
+        user: res.data
+      }
+    })
+  })
+  .catch((err) => {
+    console.warn(err)
+  })
+}
+
 Actions.userNew = function userNew(user) {
   return dispatch => fetch("http://localhost:4000/api/users", {
     method: "POST",
