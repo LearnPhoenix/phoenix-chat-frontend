@@ -5,6 +5,15 @@ import style from "./style.css"
 import { default as Button } from "../Button"
 
 export class Signup extends React.Component {
+  constructor(props) {
+    super(props)
+    this.submit = this.submit.bind(this)
+  }
+
+  submit(e) {
+    console.log("Submit button clicked")
+  }
+
   render() {
     return (
       <div className={style.wrapper}>
@@ -38,6 +47,7 @@ export class Signup extends React.Component {
               id="signup-verify-password" />
           </div>
           <Button
+            onClick={this.submit}
             style={{ width: "100%" }}
             type="primary">
             Submit
