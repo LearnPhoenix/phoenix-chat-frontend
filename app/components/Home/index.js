@@ -5,6 +5,7 @@ import style from "./style.css"
 
 import { default as Signup } from "../Signup"
 import { default as Login } from "../Login"
+import { default as Chat } from "../Chat"
 
 export class Home extends React.Component {
   constructor(props) {
@@ -42,6 +43,9 @@ export class Home extends React.Component {
   }
 
   render() {
+    if (this.props.user.email) {
+      return (<Chat />)
+    }
     return (
       <div className={style.leader}>
         <h1 className={style.title}>Phoenix Chat</h1>
