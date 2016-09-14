@@ -2,6 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Router, Route, IndexRoute, hashHistory } from "react-router"
 
+import "./styles/reset.css"
+
 import { default as Home } from "./components/Home"
 import { default as Settings } from "./components/Settings"
 
