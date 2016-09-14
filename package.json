@@ -43,8 +43,12 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.25.0",
+    "enzyme": "^2.4.1",
+    "expect": "^1.20.2",
+    "mocha": "^3.0.2",
     "postcss-cssnext": "^2.8.0",
     "postcss-loader": "^0.13.0",
+    "react-addons-test-utils": "^15.3.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.1"
