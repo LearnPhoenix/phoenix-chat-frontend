@@ -13,8 +13,15 @@ Actions.userNew = function userNew(user) {
     return res.json()
   })
   .then((res) => {
-    // TODO: More on this later
-    console.log(res)
+    /* If success, log the user in */
+    localStorage.token = res.data.token
+    /* Then send action to reducer */
+    dispatch({
+      type: "USER_NEW",
+      payload: {
+        user: res.data
+      }
+    })
   })
   .catch((err) => {
     console.warn(err)
