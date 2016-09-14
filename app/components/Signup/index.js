@@ -11,13 +11,18 @@ export class Signup extends React.Component {
   }
 
   submit() {
+    const user = {
+      username: document.getElementById("signup-username").value,
+      email: document.getElementById("signup-email").value,
+      password: document.getElementById("signup-password").value
+    }
     fetch("http://localhost:4000/api/users", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ test: "not going to work" })
+      body: JSON.stringify(user)
     })
     .then((res) => { return res.json() })
     .then((res) => {
