@@ -1,0 +1,31 @@
+{
+  "name": "phoenix-chat-frontend",
+  "version": "1.0.0",
+  "description": "React web frontend for PhoenixChat, created for www.learnphoenix.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/LearnPhoenix/phoenix-chat-frontend.git"
+  },
+  "keywords": [
+    "phoenix",
+    "phoenix-framework",
+    "elixir",
+    "erlang",
+    "phoenix-chat",
+    "learnphoenix",
+    "learn-phoenix",
+    "react",
+    "javascript",
+    "redux"
+  ],
+  "author": "Sam Corcos <sam@learnphoenix.io> (https://www.learnphoenix.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LearnPhoenix/phoenix-chat-frontend/issues"
+  },
+  "homepage": "https://github.com/LearnPhoenix/phoenix-chat-frontend#readme"
+}
