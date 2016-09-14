@@ -10,8 +10,22 @@ export class Signup extends React.Component {
     this.submit = this.submit.bind(this)
   }
 
-  submit(e) {
-    console.log("Submit button clicked")
+  submit() {
+    fetch("http://localhost:4000/api/users", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ test: "not going to work" })
+    })
+    .then((res) => { return res.json() })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.warn(err);
+    })
   }
 
   render() {
