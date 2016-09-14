@@ -1,3 +1,33 @@
-.chatWrapper {
-  margin-left: 300px;
+.leader {
+  height: 100vh;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column nowrap;
+  overflow: hidden;
+  z-index: 100;
+  background: white;
+}
+
+.title {
+  font-size: 1.8em;
+  color: rgb(239, 95, 78);
+}
+
+.changeLink {
+  cursor: pointer;
+  color: #42A5F5;
+}
+
+.circles {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  margin: auto;
+  height: 650px;
+  opacity: 0.05;
+  z-index: -1;
+  transform: scale(3);
 }
