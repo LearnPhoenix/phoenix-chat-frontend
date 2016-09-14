@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  padding-bottom: 2rem;
+  width: 400px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  width: 400px;
+}
+
+.input {
+  padding: 1rem 1rem;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 1.1em;
+  outline: none;
+}
+
+.inputGroup {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 10px 0;
+}
