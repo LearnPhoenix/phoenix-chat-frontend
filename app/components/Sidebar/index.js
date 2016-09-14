@@ -4,7 +4,7 @@ import style from "./style.css"
 
 export const Sidebar = () => {
   return (
-    <div>
+    <div className={style.sidebar}>
       <h3>John Smith</h3>
       <p>Last active: {Math.floor((Math.random() * 10) + 1)} minutes ago.</p>
     </div>
