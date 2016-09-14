@@ -1,5 +1,6 @@
 import React from "react"
 import cssModules from "react-css-modules"
+import { connect } from "react-redux"
 import style from "./style.css"
 
 import { default as Button } from "../Button"
@@ -44,4 +45,8 @@ export class Login extends React.Component {
   }
 }
 
-export default cssModules(Login, style)
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(cssModules(Login, style))
