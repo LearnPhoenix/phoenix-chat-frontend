@@ -34,5 +34,12 @@ module.exports = {
   },
   resolve: {
     extensions: [ '', '.js' ]
-  }
+  },
+  resolve: {
+    extensions: [ '', '.js' ],
+    fallback: path.join(__dirname, "node_modules")
+  },
+  resolveLoader: {
+    fallback: path.join(__dirname, "node_modules")
+  },
 }
