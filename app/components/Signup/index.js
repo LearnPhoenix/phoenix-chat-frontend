@@ -22,7 +22,7 @@ export class Signup extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify({ user })
     })
     .then((res) => { return res.json() })
     .then((res) => {
