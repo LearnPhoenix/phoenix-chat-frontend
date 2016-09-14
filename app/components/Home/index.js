@@ -1,6 +1,7 @@
 import React from "react"
 import cssModules from "react-css-modules"
 import { connect } from "react-redux"
+import PhoenixChat from "phoenix-chat"
 import style from "./style.css"
 
 import { default as Signup } from "../Signup"
@@ -44,7 +45,11 @@ export class Home extends React.Component {
 
   render() {
     if (this.props.user.email) {
-      return (<Chat />)
+      return (
+        <Chat>
+          <PhoenixChat />
+        </Chat>
+      )
     }
     return (
       <div className={style.leader}>
@@ -56,6 +61,7 @@ export class Home extends React.Component {
           role="presentation"
           className={style.circles}
           src="https://s3.amazonaws.com/learnphoenix-static-assets/images/circles-full.png" />
+        <PhoenixChat />
       </div>
     )
   }
