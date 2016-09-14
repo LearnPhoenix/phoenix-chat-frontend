@@ -1,6 +1,8 @@
 import React from "react"
 import cssModules from "react-css-modules"
+import { connect } from "react-redux"
 import style from "./style.css"
+import Actions from "../../redux/actions"
 
 import { default as Button } from "../Button"
 
@@ -16,21 +18,7 @@ export class Signup extends React.Component {
       email: document.getElementById("signup-email").value,
       password: document.getElementById("signup-password").value
     }
-    fetch("http://localhost:4000/api/users", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ user })
-    })
-    .then((res) => { return res.json() })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.warn(err);
-    })
+    this.props.dispatch(Actions.userNew(user))
   }
 
   render() {
@@ -77,4 +65,4 @@ export class Signup extends React.Component {
   }
 }
 
-export default cssModules(Signup, style)
+export default connect()(cssModules(Signup, style))
