@@ -1,5 +1,6 @@
 import React from "react"
 import cssModules from "react-css-modules"
+import { connect } from "react-redux"
 import style from "./style.css"
 
 import { default as Signup } from "../Signup"
@@ -56,4 +57,8 @@ export class Home extends React.Component {
   }
 }
 
-export default cssModules(Home, style)
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(cssModules(Home, style))
