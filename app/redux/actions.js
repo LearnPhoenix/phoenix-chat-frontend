@@ -45,6 +45,7 @@ Actions.userNew = function userNew(user) {
         user: res.data
       }
     })
+    dispatch(Actions.userAuth())
   })
   .catch((err) => {
     console.warn(err)
@@ -74,6 +75,7 @@ Actions.userLogin = function userLogin(user) {
         user: res.data
       }
     })
+    dispatch(Actions.userAuth())
   })
   .catch((err) => {
     console.warn(err)
