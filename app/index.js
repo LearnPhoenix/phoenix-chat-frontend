@@ -6,10 +6,9 @@ import store from "./redux/store"
 
 import "./styles/reset.css"
 
+import { default as App } from "./components/App"
 import { default as Home } from "./components/Home"
 import { default as Settings } from "./components/Settings"
-
-const App = props => (<div>{props.children}</div>)
 
 ReactDOM.render(
   <Provider store={store}>
