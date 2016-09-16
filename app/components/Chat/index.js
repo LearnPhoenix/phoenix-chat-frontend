@@ -13,10 +13,13 @@ export class Chat extends React.Component {
     this.state = {
       presences: {},
       messages: [],
-      currentRoom: ""
+      currentRoom: null,
+      input: ""
     }
 
     this.changeChatroom = this.changeChatroom.bind(this)
+    this.handleMessageSubmit = this.handleMessageSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -76,6 +79,21 @@ export class Chat extends React.Component {
     })
   }
 
+  handleChange(e) {
+    this.setState({ input: e.target.value })
+  }
+
+  handleMessageSubmit(e) {
+    if (e.keyCode === 13 && this.state.currentRoom && this.state.input) {
+      this.channel.push("message", {
+        room: this.state.currentRoom,
+        body: this.state.input,
+        timestamp: new Date().getTime()
+      })
+      this.setState({ input: "" })
+    }
+  }
+
   // We use a ChatRoom stateless functional component(mouthful!) to replace the
   // code for rendering a chat room and its messages.
   render() {
@@ -84,7 +102,11 @@ export class Chat extends React.Component {
         <Sidebar
           presences={this.state.presences}
           onRoomClick={this.changeChatroom} />
-        <ChatRoom messages={this.state.messages} />
+        <ChatRoom
+          input={this.state.input}
+          handleChange={this.handleChange}
+          handleMessageSubmit={this.handleMessageSubmit}
+          messages={this.state.messages} />
         { this.props.children }
       </div>
     )
