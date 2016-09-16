@@ -14,7 +14,8 @@ export class Chat extends React.Component {
       presences: {},
       messages: [],
       currentRoom: null,
-      input: ""
+      input: "",
+      lobbyList: []
     }
 
     this.changeChatroom = this.changeChatroom.bind(this)
@@ -27,6 +28,11 @@ export class Chat extends React.Component {
     this.socket = new Socket(process.env.SOCKET_HOST, { params })
     this.socket.connect()
     this.configureAdminChannel()
+  }
+
+  componentWillUnmount() {
+    if (this.channel) this.channel.leave()
+    this.adminChannel.leave()
   }
 
   configureAdminChannel() {
@@ -46,10 +52,17 @@ export class Chat extends React.Component {
       this.setState({ presences })
     })
 
+    this.adminChannel.on("lobby_list", (user) => {
+      if (!this.state.lobbyList.includes(user)) {
+        this.setState({ lobbyList: this.state.lobbyList.concat([user]) })
+      }
+    })
+
     this.adminChannel.join()
-      .receive("ok", ({ id }) => {
+      .receive("ok", ({ id, lobby_list }) => {
         // added clearer logging to track when a user joins a topic
         console.log(`${id} succesfully joined the active_users topic.`)
+        this.setState({ lobbyList: lobby_list })
       })
   }
 
@@ -101,11 +114,13 @@ export class Chat extends React.Component {
       <div>
         <Sidebar
           presences={this.state.presences}
+          lobbyList={this.state.lobbyList}
           onRoomClick={this.changeChatroom} />
         <ChatRoom
           input={this.state.input}
           handleChange={this.handleChange}
           handleMessageSubmit={this.handleMessageSubmit}
+          currentRoom={this.state.currentRoom}
           messages={this.state.messages} />
         { this.props.children }
       </div>
