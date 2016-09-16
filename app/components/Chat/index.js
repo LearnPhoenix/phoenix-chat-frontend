@@ -24,7 +24,7 @@ export class Chat extends React.Component {
 
   componentDidMount() {
     const params = this.props.user
-    this.socket = new Socket("ws://localhost:4000/socket", { params })
+    this.socket = new Socket(process.env.SOCKET_HOST, { params })
     this.socket.connect()
     this.configureAdminChannel()
   }
