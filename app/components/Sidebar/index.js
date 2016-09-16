@@ -17,7 +17,9 @@ const renderList = (props) => {
   return Presence.list(props.presences, listBy)
     .map(({ id }) => {
       return (
-        <div key={id}>
+        <div
+          key={id}
+          onClick={() => { props.onRoomClick(id) }}>
           { id }
         </div>
       )

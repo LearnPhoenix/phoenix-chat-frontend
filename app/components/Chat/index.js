@@ -5,13 +5,18 @@ import { connect } from "react-redux"
 import style from "./style.css"
 
 import { default as Sidebar } from "../Sidebar"
+import { default as ChatRoom } from "../ChatRoom"
 
 export class Chat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      presences: {}
+      presences: {},
+      messages: [],
+      currentRoom: ""
     }
+
+    this.changeChatroom = this.changeChatroom.bind(this)
   }
 
   componentDidMount() {
@@ -45,14 +50,41 @@ export class Chat extends React.Component {
       })
   }
 
+  changeChatroom(room) {
+    this.channel = this.socket.channel(`room:${room}`)
+    this.setState({
+      messages: []
+    })
+    this.configureRoomChannel(room)
+  }
+
+  configureRoomChannel(room) {
+    this.channel.join()
+      .receive("ok", ({ messages }) => {
+        console.log(`Succesfully joined the ${room} chat room.`, messages)
+        this.setState({
+          messages,
+          currentRoom: room
+        })
+      })
+      .receive("error", () => { console.log(`Unable to join the ${room} chat room.`) })
+
+    this.channel.on("message", payload => {
+      this.setState({
+        messages: this.state.messages.concat([payload])
+      })
+    })
+  }
+
+  // We use a ChatRoom stateless functional component(mouthful!) to replace the
+  // code for rendering a chat room and its messages.
   render() {
     return (
       <div>
         <Sidebar
-          presences={this.state.presences} />
-        <div className={style.chatWrapper}>
-          chat me
-        </div>
+          presences={this.state.presences}
+          onRoomClick={this.changeChatroom} />
+        <ChatRoom messages={this.state.messages} />
         { this.props.children }
       </div>
     )
