@@ -5,13 +5,17 @@ import { connect } from "react-redux"
 import style from "./style.css"
 
 import { default as Sidebar } from "../Sidebar"
+import { default as ChatRoom } from "../ChatRoom"
 
 export class Chat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      presences: {}
+      presences: {},
+      messages: [],
+      currentRoom: ""
     }
+    this.changeChatroom = this.changeChatroom.bind(this)
   }
 
   componentDidMount() {
@@ -37,6 +41,14 @@ export class Chat extends React.Component {
       .receive("ok", ({ id }) => {
         console.log(`${id} succesfully joined the active_users topic.`)
       })
+  }
+
+  changeChatroom(room) {
+    this.channel = this.socket.channel(`room:${room}`)
+    this.setState({
+      messages: []
+    })
+    this.configureRoomChannel(room)
   }
 
   render() {
