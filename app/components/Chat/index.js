@@ -21,6 +21,24 @@ export class Chat extends React.Component {
     this.configureAdminChannel()
   }
 
+  configureAdminChannel() {
+    this.adminChannel = this.socket.channel("admin:active_users")
+    this.adminChannel.on("presence_state", state => {
+      const presences = Presence.syncState(this.state.presences, state)
+      console.log('Presences after sync: ', presences)
+      this.setState({ presences })
+    })
+    this.adminChannel.on("presence_diff", state => {
+      const presences = Presence.syncDiff(this.state.presences, state)
+      console.log('Presences after diff: ', presences)
+      this.setState({ presences })
+    })
+    this.adminChannel.join()
+      .receive("ok", ({ id }) => {
+        console.log(`${id} succesfully joined the active_users topic.`)
+      })
+  }
+
   render() {
     return (
       <div>
