@@ -1,12 +1,29 @@
 import React from "react"
 import cssModules from "react-css-modules"
+import { Presence } from "phoenix"
 import style from "./style.css"
 
-export const Sidebar = () => {
+const listBy = (id, { metas: [first, ...rest] }) => {
+  first.count = rest.length + 1
+  first.id = id
+  return first
+}
+
+const renderList = props => {
+  return Presence.list(props.presences, listBy)
+    .map(({ id }) => {
+      return (
+        <div key={id}>
+          { id }
+        </div>
+      )
+    })
+}
+
+export const Sidebar = props => {
   return (
     <div className={style.sidebar}>
-      <h3>John Smith</h3>
-      <p>Last active: {Math.floor((Math.random() * 10) + 1)} minutes ago.</p>
+      { renderList(props) }
     </div>
   )
 }
