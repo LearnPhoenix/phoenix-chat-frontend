@@ -42,11 +42,12 @@ export class Chat extends React.Component {
   render() {
     return (
       <div>
-        <Sidebar />
+        <Sidebar
+          presences={this.state.presences} />
         <div className={style.chatWrapper}>
           chat me
         </div>
-        {this.props.children}
+        { this.props.children }
       </div>
     )
   }
