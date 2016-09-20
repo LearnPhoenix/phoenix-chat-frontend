@@ -10,6 +10,18 @@ export class ChatRoom extends React.Component {
     }
   }
 
+  renderMessages() {
+    return this.props.messages.map(({ body, id }, i) => {
+      return (
+        <div
+          ref={ref => { this[`chatMessage:${i}`] = ref }}
+          key={id}>
+          { body }
+        </div>
+      )
+    })
+  }
+
   render() {
     return (
       <div
