@@ -43,6 +43,24 @@ export class Chat extends React.Component {
       })
   }
 
+  configureRoomChannel(room) {
+    this.channel.join()
+      .receive("ok", ({ messages }) => {
+        console.log(`Succesfully joined the ${room} chat room.`, messages)
+        this.setState({
+          messages,
+          currentRoom: room
+        })
+      })
+      .receive("error", () => { console.log(`Unable to join the ${room} chat room.`) })
+
+    this.channel.on("message", payload => {
+      this.setState({
+        messages: this.state.messages.concat([payload])
+      })
+    })
+  }
+
   changeChatroom(room) {
     this.channel = this.socket.channel(`room:${room}`)
     this.setState({
@@ -55,10 +73,9 @@ export class Chat extends React.Component {
     return (
       <div>
         <Sidebar
-          presences={this.state.presences} />
-        <div className={style.chatWrapper}>
-          chat me
-        </div>
+          presences={this.state.presences}
+          onRoomClick={this.changeChatroom} />
+        <ChatRoom messages={this.state.messages} />
         { this.props.children }
       </div>
     )
