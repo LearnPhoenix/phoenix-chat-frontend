@@ -11,6 +11,7 @@ export class Chat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      mountChildren: false,
       presences: {},
       messages: [],
       currentRoom: ""
@@ -32,14 +33,18 @@ export class Chat extends React.Component {
       console.log('Presences after sync: ', presences)
       this.setState({ presences })
     })
-    this.adminChannel.on("presence_diff", state => {
-      const presences = Presence.syncDiff(this.state.presences, state)
-      console.log('Presences after diff: ', presences)
-      this.setState({ presences })
+    this.adminChannel.on("lobby_list", (user) => {
+      const userInLobbyList = this.state.lobbyList.find((lobbyUser) => {
+        return user.id === lobbyUser.id
+      })
+      if (!userInLobbyList) {
+        this.setState({ lobbyList: this.state.lobbyList.concat([user]) })
+      }
     })
     this.adminChannel.join()
-      .receive("ok", ({ id }) => {
+      .receive("ok", ({ id, lobby_list }) => {
         console.log(`${id} succesfully joined the active_users topic.`)
+        this.setState({ lobbyList: lobby_list, mountChildren: true })
       })
   }
 
@@ -76,7 +81,7 @@ export class Chat extends React.Component {
           presences={this.state.presences}
           onRoomClick={this.changeChatroom} />
         <ChatRoom messages={this.state.messages} />
-        { this.props.children }
+        { this.state.mountChildren ? this.props.children : null }
       </div>
     )
   }

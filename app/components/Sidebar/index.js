@@ -14,7 +14,7 @@ const renderList = props => {
     .map(({ id }) => {
       return (
         <div
-          onClick={() => { props.onRoomClick(id) }}>
+          onClick={() => { props.onRoomClick(id) }}
           key={id}>
           { id }
         </div>
