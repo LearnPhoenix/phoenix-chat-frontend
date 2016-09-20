@@ -15,7 +15,8 @@ export class Chat extends React.Component {
       messages: [],
       currentRoom: null,
       input: "",
-      lobbyList: []
+      lobbyList: [],
+      mountChildren: false
     }
 
     this.changeChatroom = this.changeChatroom.bind(this)
@@ -53,7 +54,8 @@ export class Chat extends React.Component {
     })
 
     this.adminChannel.on("lobby_list", (user) => {
-      if (!this.state.lobbyList.includes(user)) {
+      const userInLobbyList = this.state.lobbyList.find((lobbyUser) => user.id === lobbyUser.id)
+      if (!userInLobbyList) {
         this.setState({ lobbyList: this.state.lobbyList.concat([user]) })
       }
     })
@@ -62,7 +64,7 @@ export class Chat extends React.Component {
       .receive("ok", ({ id, lobby_list }) => {
         // added clearer logging to track when a user joins a topic
         console.log(`${id} succesfully joined the active_users topic.`)
-        this.setState({ lobbyList: lobby_list })
+        this.setState({ lobbyList: lobby_list, mountChildren: true })
       })
   }
 
@@ -122,7 +124,7 @@ export class Chat extends React.Component {
           handleMessageSubmit={this.handleMessageSubmit}
           currentRoom={this.state.currentRoom}
           messages={this.state.messages} />
-        { this.props.children }
+        { this.state.mountChildren ? this.props.children : null }
       </div>
     )
   }
