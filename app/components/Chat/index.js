@@ -13,8 +13,9 @@ export class Chat extends React.Component {
     this.state = {
       mountChildren: false,
       presences: {},
+      lobbyList: [],
       messages: [],
-      currentRoom: ""
+      currentRoom: null
     }
     this.changeChatroom = this.changeChatroom.bind(this)
   }
@@ -33,6 +34,13 @@ export class Chat extends React.Component {
       console.log('Presences after sync: ', presences)
       this.setState({ presences })
     })
+
+    this.adminChannel.on("presence_diff", state => {
+      const presences = Presence.syncDiff(this.state.presences, state)
+      console.log('Presences after diff: ', presences)
+      this.setState({ presences })
+    })
+
     this.adminChannel.on("lobby_list", (user) => {
       const userInLobbyList = this.state.lobbyList.find((lobbyUser) => {
         return user.id === lobbyUser.id
@@ -74,13 +82,29 @@ export class Chat extends React.Component {
     this.configureRoomChannel(room)
   }
 
+  handleChange(e) {
+    this.setState({ input: e.target.value })
+  }
+
+  handleMessageSubmit(e) {
+    if (e.keyCode === 13 && this.state.currentRoom && this.state.input) {
+      this.channel.push("message", {
+        room: this.state.currentRoom,
+        body: this.state.input,
+        timestamp: new Date().getTime()
+      })
+      this.setState({ input: "" })
+    }
+  }
+
   render() {
     return (
       <div>
         <Sidebar
           presences={this.state.presences}
+          lobbyList={this.state.lobbyList}
           onRoomClick={this.changeChatroom} />
-        <ChatRoom messages={this.state.messages} />
+        <ChatRoom messages={this.state.messages}/>
         { this.state.mountChildren ? this.props.children : null }
       </div>
     )
